@@ -29,7 +29,12 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  HeaderGuardFixer::FixHeaderGuardsInFile(file_path, is_edit_mode);
+  int return_code =
+      HeaderGuardFixer::FixHeaderGuardsInFile(file_path, is_edit_mode);
+
+  if (return_code != 0) {
+    return return_code;
+  }
 
   return app.exec();
 }

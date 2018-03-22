@@ -6,8 +6,7 @@
 class HeaderGuardFixer {
 
 public:
-  static void FixHeaderGuardsInFile(const QString &file_name,
-                                    bool is_edit_mode);
+  static int FixHeaderGuardsInFile(const QString &file_name, bool is_edit_mode);
 
 private:
   static bool CheckHeaderGuardsInText(const QString &file_text,

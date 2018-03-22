@@ -6,8 +6,8 @@
 
 #include <QFile>
 
-void HeaderGuardFixer::FixHeaderGuardsInFile(const QString &file_name,
-                                             bool is_edit_mode) {
+int HeaderGuardFixer::FixHeaderGuardsInFile(const QString &file_name,
+                                            bool is_edit_mode) {
   QFile working_file(file_name);
   QFileInfo working_file_info(working_file);
   QString short_file_path = working_file_info.fileName();
@@ -16,13 +16,38 @@ void HeaderGuardFixer::FixHeaderGuardsInFile(const QString &file_name,
   QString file_contents = working_file.readAll();
   working_file.close();
 
-  QString parsed_file = FixHeaderGuardsInText(file_contents, short_file_path);
+  if (!is_edit_mode) {
+    QString parsed_file = FixHeaderGuardsInText(file_contents, short_file_path);
 
-  working_file.open(QIODevice::WriteOnly);
-  QTextStream out(&working_file);
-  out << parsed_file;
+    if (parsed_file != file_contents) {
+      working_file.open(QIODevice::WriteOnly);
+      QTextStream out(&working_file);
+      out << parsed_file;
 
-  working_file.close();
+      working_file.close();
+    }
+
+    return 0;
+  }
+
+  bool is_guard_ok = CheckHeaderGuardsInText(file_contents, short_file_path);
+  return is_guard_ok ? 0 : 1;
+}
+
+bool HeaderGuardFixer::CheckHeaderGuardsInText(const QString &file_text,
+                                               const QString &file_name) {
+  QString header_guard = FindHeaderGuard(file_text);
+
+  if (header_guard == "") {
+    return false;
+  }
+  QString header_guard_from_file = MakeHeaderGuardFromFileName(file_name);
+
+  if (header_guard != header_guard_from_file) {
+    return false;
+  }
+
+  return true;
 }
 
 QString HeaderGuardFixer::FixHeaderGuardsInText(const QString &file_text,
