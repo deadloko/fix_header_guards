@@ -17,6 +17,10 @@ int main(int argc, char *argv[]) {
   }
   bool is_edit_mode = false;
   QString file_path = arguments.last();
+  if (!file_path.endsWith(".h")) {
+    return 3;
+  }
+
   arguments.pop_back();
 
   for (auto argument : arguments) {

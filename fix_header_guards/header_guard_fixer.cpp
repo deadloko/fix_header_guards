@@ -1,10 +1,29 @@
 #include "header_guard_fixer.h"
 
 #include <QDebug>
+#include <QFileInfo>
 #include <QRegExp>
 
+#include <QFile>
+
 void HeaderGuardFixer::FixHeaderGuardsInFile(const QString &file_name,
-                                             bool is_edit_mode) {}
+                                             bool is_edit_mode) {
+  QFile working_file(file_name);
+  QFileInfo working_file_info(working_file);
+  QString short_file_path = working_file_info.fileName();
+
+  working_file.open(QIODevice::ReadOnly);
+  QString file_contents = working_file.readAll();
+  working_file.close();
+
+  QString parsed_file = FixHeaderGuardsInText(file_contents, short_file_path);
+
+  working_file.open(QIODevice::WriteOnly);
+  QTextStream out(&working_file);
+  out << parsed_file;
+
+  working_file.close();
+}
 
 QString HeaderGuardFixer::FixHeaderGuardsInText(const QString &file_text,
                                                 const QString &file_name) {

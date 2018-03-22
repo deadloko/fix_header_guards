@@ -10,8 +10,8 @@ public:
                                     bool is_edit_mode);
 
 private:
-  static QString CheckHeaderGuardsInText(const QString &file_text,
-                                         const QString &file_name);
+  static bool CheckHeaderGuardsInText(const QString &file_text,
+                                      const QString &file_name);
 
   static QString FixHeaderGuardsInText(const QString &file_text,
                                        const QString &file_name);
