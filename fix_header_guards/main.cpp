@@ -36,5 +36,5 @@ int main(int argc, char *argv[]) {
     return return_code;
   }
 
-  return app.exec();
+  return 0;
 }

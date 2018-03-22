@@ -1,5 +1,5 @@
-#ifndef HEADERGUARDFIXER_H
-#define HEADERGUARDFIXER_H
+#ifndef HEADER_GUARD_FIXER_H
+#define HEADER_GUARD_FIXER_H
 
 #include <QString>
 

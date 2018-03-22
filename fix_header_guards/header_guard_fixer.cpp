@@ -36,14 +36,14 @@ int HeaderGuardFixer::FixHeaderGuardsInFile(const QString &file_name,
 
 bool HeaderGuardFixer::CheckHeaderGuardsInText(const QString &file_text,
                                                const QString &file_name) {
-  QString header_guard = FindHeaderGuard(file_text);
-
-  if (header_guard == "") {
-    return false;
-  }
   QString header_guard_from_file = MakeHeaderGuardFromFileName(file_name);
 
-  if (header_guard != header_guard_from_file) {
+  QString first_guard = "#ifndef " + header_guard_from_file;
+  QString second_guard = "#define " + header_guard_from_file;
+  QString third_guard = "#endif // " + header_guard_from_file;
+
+  if (!file_text.contains(first_guard) || !file_text.contains(second_guard) ||
+      !file_text.contains(third_guard)) {
     return false;
   }
 
