@@ -16,7 +16,7 @@ int HeaderGuardFixer::FixHeaderGuardsInFile(const QString &file_name,
   QString file_contents = working_file.readAll();
   working_file.close();
 
-  if (!is_edit_mode) {
+  if (is_edit_mode) {
     QString parsed_file = FixHeaderGuardsInText(file_contents, short_file_path);
 
     if (parsed_file != file_contents) {
