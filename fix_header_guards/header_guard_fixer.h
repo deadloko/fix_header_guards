@@ -18,4 +18,4 @@ private:
   static QString MakeHeaderGuardFromFileName(const QString &file_name);
 };
 
-#endif // HEADERGUARDFIXER_H
+#endif  // HEADER_GUARD_FIXER_H
